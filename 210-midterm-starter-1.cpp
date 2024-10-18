@@ -3,22 +3,26 @@ using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 
+// Definition of the DoublyLinkedList class
 class DoublyLinkedList {
 private:
+    // Definition of the Node structure
     struct Node {
-        int data;
-        Node* prev;
-        Node* next;
+        int data;       // The value stored in the node
+        Node* prev;     // Pointer to the previous node
+        Node* next;     // Pointer to the next node
+
+        // Constructor for Node
         Node(int val, Node* p = nullptr, Node* n = nullptr) {
-            data = val; 
-            prev = p;
-            next = n;
+            data = val;     // Initialize data with val
+            prev = p;       // Initialize prev with p (default nullptr)
+            next = n;       // Initialize next with n (default nullptr)
         }
     };
 
-    Node* head;
-    Node* tail;
-
+    Node* head; // Pointer to the first node in the list
+    Node* tail; // Pointer to the last node in the list
+    
 public:
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
 
