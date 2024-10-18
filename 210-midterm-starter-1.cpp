@@ -1,3 +1,4 @@
+// COMSC-210 | Exam 1 | Zhaoyi Zheng
 #include <iostream>
 using namespace std;
 
@@ -287,10 +288,27 @@ public:
 };
 
 int main() {
-    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+    // Dummy statement to avoid compiler warning
+    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS << endl;
 
     // Create an instance of DoublyLinkedList
-    DoublyLinkedLi
+    DoublyLinkedList dll;
+
+    // Add elements to the list
+    dll.push_back(1);
+    dll.push_back(2);
+    dll.push_back(3);
+    dll.push_back(4);
+    dll.push_back(5);
+    dll.push_back(6);
+    dll.push_back(7);
+    dll.push_back(8);
+
+    cout << "Original list:" << endl;
+    dll.print();
+
+    cout << "Every other element:" << endl;
+    dll.every_other_element();
     
     return 0;
 }
