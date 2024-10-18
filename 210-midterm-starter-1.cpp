@@ -157,25 +157,29 @@ public:
         delete temp; // Free memory to prevent leak
     }
 
+    // Method to add a node with value 'v' at the end
     void push_back(int v) {
-        Node* newNode = new Node(v);
+        Node* newNode = new Node(v); // Create a new node
+
         if (!tail)
-            head = tail = newNode;
+            head = tail = newNode; // If list is empty, update head and tail
         else {
-            tail->next = newNode;
-            newNode->prev = tail;
-            tail = newNode;
+            tail->next = newNode;   // Link the new node after tail
+            newNode->prev = tail;   // Set newNode's prev to current tail
+            tail = newNode;         // Update the tail to newNode
         }
     }
-    
+
+    // Method to add a node with value 'v' at the beginning
     void push_front(int v) {
-        Node* newNode = new Node(v);
+        Node* newNode = new Node(v); // Create a new node
+
         if (!head)
-            head = tail = newNode;
+            head = tail = newNode; // If list is empty, update head and tail
         else {
-            newNode->next = head;
-            head->prev = newNode;
-            head = newNode;
+            newNode->next = head;  // Else, Link newNode to current head
+            head->prev = newNode;  // Set head's prev to newNode
+            head = newNode;        // Update head to newNode
         }
     }
     
@@ -208,7 +212,7 @@ public:
 
         if (tail->prev) {
             tail = tail->prev;    // Move tail to the previous node
-            tail->next = nullptr; // Set new tail's next to nullptr
+            tail->next = nullptr; // Set new tail's next to nullptr if tail to prev
         }
         else
             head = tail = nullptr; // If there are only one node, set head and tail to nullptr
@@ -258,24 +262,35 @@ public:
     }
 
     // Method to print every other element starting from the first
-     void every_other_element() {
-        Node* current = head;
+    void every_other_element() {
+        Node* current = head;   // Start from the head node
 
         if (!current) {
+            // List is empty
             cout << "List is empty." << endl;
             return;
         }
 
-        bool print_flag = true; // Flag to determine whether to print the node
+        while (current) {
+            cout << current->data << " "; // Output current node's data
 
-        whil
-     }
-
+            if (current->next) {
+                // If there's a next node, skip it
+                current = current->next->next; // Move two nodes ahead
+            } else {
+                // No next node, end of list
+                break;
+            }
+        }
+        cout << endl; // New line after printing the elements
+    }
 };
 
 int main() {
     cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
 
+    // Create an instance of DoublyLinkedList
+    DoublyLinkedLi
     
     return 0;
 }
