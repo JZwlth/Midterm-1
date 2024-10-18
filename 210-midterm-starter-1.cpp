@@ -1,9 +1,10 @@
 #include <iostream>
 using namespace std;
 
+// Constants varible
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 
-// Definition of the DoublyLinkedList class
+// The Definition of the DoublyLinkedList class
 class DoublyLinkedList {
 private:
     // Definition of the Node structure
@@ -15,106 +16,144 @@ private:
         // Constructor for Node
         Node(int val, Node* p = nullptr, Node* n = nullptr) {
             data = val;     // Initialize data with val
-            prev = p;       // Initialize prev with p (default nullptr)
-            next = n;       // Initialize next with n (default nullptr)
+            prev = p;       // Initialize prev with p 
+            next = n;       // Initialize next with n 
         }
     };
 
     Node* head; // Pointer to the first node in the list
     Node* tail; // Pointer to the last node in the list
-    
-public:
-    DoublyLinkedList() { head = nullptr; tail = nullptr; }
 
+public:
+    // Constructor for DoublyLinkedList
+    DoublyLinkedList() {
+        head = nullptr; // Initialize head to nullptr (with empty list)
+        tail = nullptr; // Initialize tail to nullptr (with empty list)
+    }
+
+    // Method to insert a new node with value 'value' after position 'position'
     void insert_after(int value, int position) {
         if (position < 0) {
             cout << "Position must be >= 0." << endl;
             return;
         }
 
+        // Create a new node with the given value
         Node* newNode = new Node(value);
+
         if (!head) {
+            // If the list is empty, set head and tail to the new node
             head = tail = newNode;
             return;
         }
 
+        // Start from the head node
         Node* temp = head;
+
+        // Move temp to the node at the given position
         for (int i = 0; i < position && temp; ++i)
             temp = temp->next;
 
         if (!temp) {
+            // If position exceeds list size
             cout << "Position exceeds list size. Node not inserted.\n";
-            delete newNode;
+            delete newNode; // Free the memory allocated for newNode
             return;
         }
 
-        newNode->next = temp->next;
-        newNode->prev = temp;
+        // Insert newNode after temp
+        newNode->next = temp->next; // newNode's next points to temp's next
+        newNode->prev = temp;       // newNode's prev points to temp
+
         if (temp->next)
-            temp->next->prev = newNode;
+            temp->next->prev = newNode; // Update next node's prev to newNode
         else
-            tail = newNode;
-        temp->next = newNode;
+            tail = newNode;             // If temp was the tail, update tail
+
+        temp->next = newNode;           // temp's next points to newNode
     }
 
+    // Method to delete the first node with the given value
     void delete_val(int value) {
-        if (!head) return;
+        if (!head) {
+            // If the list is empty nothing need to be delete
+            return;
+        }
 
         Node* temp = head;
-        
+
+        // Traverse the list to find the node with the specified value
         while (temp && temp->data != value)
             temp = temp->next;
 
-        if (!temp) return; 
+        if (!temp) {
+            // Value not found in the list
+            return;
+        }
 
-        if (temp->prev)
+        // Adjust pointers to remove temp from the list
+        if (temp->prev) {
+            // If temp is not the head, update the previous node's next pointer
             temp->prev->next = temp->next;
-        else
-            head = temp->next; 
+        } else {
+            // If temp is the head, update the head pointer
+            head = temp->next;
+        }
 
-        if (temp->next)
+        if (temp->next) {
+            // If temp is not the tail, update the next node's prev pointer
             temp->next->prev = temp->prev;
-        else
-            tail = temp->prev; 
+        } else {
+            // If temp is the tail, update the tail pointer
+            tail = temp->prev;
+        }
 
-        delete temp;
+        delete temp; // Free memory to prevent leak
     }
 
+    // Method to delete a node at a specific position (1-based index)
     void delete_pos(int pos) {
         if (!head) {
+            // List is empty
             cout << "List is empty." << endl;
             return;
         }
-    
+
         if (pos == 1) {
+            // Delete the first node
             pop_front();
             return;
         }
-    
+
         Node* temp = head;
-    
-        for (int i = 1; i < pos; i++){
+
+        // Traverse to the node at the specified position
+        for (int i = 1; i < pos; ++i) {
             if (!temp) {
+                // Position is beyond the list length
                 cout << "Position doesn't exist." << endl;
                 return;
             }
-            else
-                temp = temp->next;
+            temp = temp->next;
         }
+
         if (!temp) {
             cout << "Position doesn't exist." << endl;
             return;
         }
-    
+
         if (!temp->next) {
+            // Delete the last node
             pop_back();
             return;
         }
-    
-        Node* tempPrev = temp->prev;
-        tempPrev->next = temp->next;
-        temp->next->prev = tempPrev;
-        delete temp;
+
+        // Adjust pointep from the list
+        Node* tempPrev = temp->prev; // Node temp
+        tempPrev->next = temp->next; // Skip  thpointer
+        temp->next->prev = tempPrev; 
+
+        delete temp; // Free memory to prevent leak
     }
 
     void push_back(int v) {
